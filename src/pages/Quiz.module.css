@@ -1,0 +1,225 @@
+.layout {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.header {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.headerTop {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.chip {
+  background: var(--mint-light);
+  color: var(--slate);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 20px;
+  letter-spacing: 0.3px;
+}
+
+.timer {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-mid);
+  margin-left: auto;
+  background: var(--slate-light);
+  padding: 5px 12px;
+  border-radius: 20px;
+  transition: all 0.3s;
+}
+.timerLow {
+  background: #fdf0f2;
+  color: #c0606a;
+  animation: pulse 1s infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.65; }
+}
+
+.quizTitle {
+  font-family: 'Lora', serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--slate);
+  margin-bottom: 4px;
+}
+.quizMeta {
+  font-size: 13px;
+  color: var(--text-light);
+  margin-bottom: 12px;
+}
+
+.pills {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.pill {
+  width: 32px;
+  height: 8px;
+  border-radius: 4px;
+  background: var(--border);
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  padding: 0;
+}
+.pill:hover { background: var(--mint-mid); }
+.pillAnswered { background: var(--mint-mid); }
+.pillCurrent { background: var(--blossom) !important; }
+.pillDone { background: var(--mint); }
+
+/* Question card */
+.questionCard {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 2rem;
+  margin-bottom: 1.2rem;
+}
+.qNum {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-light);
+  letter-spacing: 0.5px;
+  margin-bottom: 0.8rem;
+}
+.qText {
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 1.65;
+  color: var(--text-dark);
+  margin-bottom: 1.6rem;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 13px 16px;
+  font-size: 14px;
+  font-family: 'Sora', sans-serif;
+  color: var(--text-dark);
+  background: var(--white);
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s;
+  width: 100%;
+}
+.option:hover { border-color: var(--mint); background: var(--mint-light); }
+.selected { border-color: var(--mint) !important; background: var(--mint-light) !important; font-weight: 500; }
+
+.optLetter {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--slate-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-mid);
+  flex-shrink: 0;
+  transition: all 0.15s;
+}
+.selected .optLetter {
+  background: var(--mint);
+  color: var(--slate);
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+/* Result */
+.resultCard {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 3rem 2rem;
+  text-align: center;
+}
+.resultIcon { font-size: 60px; margin-bottom: 1rem; }
+.resultScore {
+  font-family: 'Lora', serif;
+  font-size: 52px;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+.scorePass { color: var(--mint); }
+.scoreFail { color: #c0606a; }
+
+.resultLabel { font-size: 15px; color: var(--text-mid); margin-bottom: 1.4rem; }
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--mint-light);
+  color: #2a7d4f;
+  border: 1px solid var(--mint-mid);
+  font-size: 14px;
+  font-weight: 600;
+  padding: 10px 24px;
+  border-radius: 20px;
+  margin-bottom: 2rem;
+}
+.badgeFail {
+  background: #fdf0f2;
+  color: #9c3a42;
+  border-color: #f0b8be;
+}
+
+.reviewGrid {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+.reviewItem {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.reviewCorrect { background: var(--mint-light); color: #2a7d4f; }
+.reviewWrong { background: #fdf0f2; color: #9c3a42; }
+.reviewNum { font-size: 11px; opacity: 0.7; }
+
+.resultBtns {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}

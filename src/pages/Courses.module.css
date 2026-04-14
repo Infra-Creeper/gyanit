@@ -1,0 +1,109 @@
+.header {
+  background: var(--slate);
+  padding: 3rem 2rem;
+  color: var(--white);
+}
+.headerInner { max-width: 1100px; margin: 0 auto; }
+.header h1 { font-family: 'Lora', serif; font-size: 2rem; margin-bottom: 0.4rem; color: var(--white); }
+.header p { opacity: 0.65; font-size: 14px; margin-bottom: 1.5rem; }
+
+.searchRow { display: flex; gap: 10px; }
+.searchWrap { position: relative; }
+.searchIcon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: rgba(250,252,251,0.5); }
+.searchInput {
+  background: rgba(168,213,186,0.12);
+  border: 1px solid rgba(168,213,186,0.25);
+  border-radius: 8px;
+  padding: 10px 16px 10px 36px;
+  color: var(--white);
+  font-size: 14px;
+  width: 320px;
+  outline: none;
+  transition: border 0.2s;
+}
+.searchInput::placeholder { color: rgba(250,252,251,0.45); }
+.searchInput:focus { border-color: var(--mint-mid); }
+
+.layout {
+  display: flex;
+  gap: 24px;
+  max-width: 1100px;
+  margin: 2rem auto;
+  padding: 0 2rem;
+  align-items: flex-start;
+}
+
+.sidebar { width: 220px; flex-shrink: 0; }
+
+.filterCard {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.2rem;
+  margin-bottom: 16px;
+}
+
+.filterTitle {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--slate);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.filterItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 0;
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--text-mid);
+  transition: color 0.15s;
+}
+.filterItem:hover { color: var(--text-dark); }
+.filterItem input { accent-color: var(--mint); width: 14px; height: 14px; cursor: pointer; }
+.filterCount { margin-left: auto; font-size: 11px; color: var(--text-light); background: var(--slate-light); padding: 1px 7px; border-radius: 10px; }
+
+.main { flex: 1; min-width: 0; }
+
+.resultsBar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+.count { font-size: 14px; color: var(--text-mid); }
+
+.sortSelect {
+  font-family: 'Sora', sans-serif;
+  font-size: 13px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 7px 12px;
+  color: var(--text-dark);
+  background: var(--white);
+  cursor: pointer;
+  outline: none;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap: 20px;
+}
+
+.empty {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: var(--text-light);
+}
+.clearBtn {
+  margin-top: 12px;
+  background: none;
+  border: 1.5px solid var(--mint);
+  color: var(--mint);
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.clearBtn:hover { background: var(--mint-light); }

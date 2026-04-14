@@ -1,0 +1,195 @@
+.hero {
+  background: linear-gradient(135deg, var(--slate) 0%, #1a3535 100%);
+  padding: 5rem 2rem 4.5rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -80px; right: -80px;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(98,188,150,0.15) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -60px; left: -40px;
+  width: 280px; height: 280px;
+  background: radial-gradient(circle, rgba(238,170,190,0.12) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.heroInner { position: relative; z-index: 1; }
+
+.badge {
+  display: inline-block;
+  background: rgba(168,213,186,0.16);
+  border: 1px solid rgba(168,213,186,0.35);
+  color: var(--mint-mid);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 16px;
+  border-radius: 20px;
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.4px;
+}
+
+.hero h1 {
+  font-family: 'Lora', serif;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--white);
+  max-width: 680px;
+  margin: 0 auto 1rem;
+}
+.hero h1 em { color: var(--mint-mid); font-style: italic; }
+
+.hero p {
+  font-size: 17px;
+  color: rgba(250,252,251,0.72);
+  max-width: 520px;
+  margin: 0 auto 2.5rem;
+  line-height: 1.75;
+}
+
+.heroBtns {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.stats {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 2.5rem 2rem;
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+}
+
+.stat { text-align: center; }
+.statNum { font-size: 28px; font-weight: 700; color: var(--mint); }
+.statLabel { font-size: 13px; color: var(--text-light); margin-top: 2px; }
+
+.section {
+  padding: 3.5rem 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.sectionTitle {
+  font-size: 24px;
+  margin-bottom: 0.4rem;
+  color: var(--slate);
+}
+.sectionSub { color: var(--text-light); font-size: 14px; margin-bottom: 2rem; }
+
+.domainGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+}
+
+.domainCard {
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 1.3rem 1rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.domainCard:hover {
+  border-color: var(--mint);
+  transform: translateY(-2px);
+  box-shadow: var(--card-shadow);
+  background: var(--mint-light);
+}
+.domainIcon { font-size: 30px; margin-bottom: 8px; }
+.domainName { font-size: 13px; font-weight: 600; color: var(--text-dark); }
+.domainCount { font-size: 11px; color: var(--text-light); margin-top: 3px; }
+
+.featuredSection {
+  background: var(--mint-light);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.coursesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.viewAll {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.stepsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 24px;
+}
+
+.step {
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  padding: 2rem 1.5rem;
+  transition: all 0.2s;
+}
+.step:hover { border-color: var(--mint); box-shadow: var(--card-shadow); }
+
+.stepIcon {
+  width: 48px;
+  height: 48px;
+  background: var(--mint-light);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--mint);
+  margin-bottom: 12px;
+}
+
+.stepNum {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--mint);
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+}
+
+.stepTitle {
+  font-family: 'Lora', serif;
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--slate);
+  margin-bottom: 8px;
+}
+
+.stepDesc { font-size: 14px; color: var(--text-mid); line-height: 1.65; }
+
+.cta {
+  background: var(--slate);
+  padding: 5rem 2rem;
+  text-align: center;
+  color: var(--white);
+}
+.cta h2 {
+  font-family: 'Lora', serif;
+  font-size: 2rem;
+  color: var(--white);
+  margin-bottom: 0.6rem;
+}
+.cta p { color: rgba(250,252,251,0.7); margin-bottom: 2rem; font-size: 16px; }

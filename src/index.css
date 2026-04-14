@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap');
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --mint: #62bc96;
+  --mint-hover: #4eaa82;
+  --mint-light: #e8f7f0;
+  --mint-mid: #a8d5ba;
+  --blossom: #eeaabe;
+  --blossom-light: #fdf0f4;
+  --blossom-dark: #9c4a62;
+  --slate: #2f4f4f;
+  --slate-mid: #1d3d3d;
+  --slate-light: #e8eeee;
+  --white: #fafcfb;
+  --text-dark: #1a2e2e;
+  --text-mid: #3d5c5c;
+  --text-light: #7a9a9a;
+  --border: #c8ddd8;
+  --card-shadow: 0 2px 12px rgba(98,188,150,0.10);
+  --card-shadow-hover: 0 8px 24px rgba(98,188,150,0.16);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Sora', sans-serif;
+  background: var(--white);
+  color: var(--text-dark);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--slate-light); }
+::-webkit-scrollbar-thumb { background: var(--mint-mid); border-radius: 3px; }
+
+/* Typography */
+h1, h2, h3, h4 { font-family: 'Lora', serif; color: var(--text-dark); }
+
+/* Focus */
+*:focus-visible { outline: 2px solid var(--mint); outline-offset: 2px; }
+
+/* Transitions */
+a { color: inherit; text-decoration: none; }
+button { cursor: pointer; font-family: 'Sora', sans-serif; }
+input, textarea, select { font-family: 'Sora', sans-serif; }
