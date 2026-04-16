@@ -1,128 +1,93 @@
--- ============================================================
--- gyan.it — Supabase SQL Schema
--- Run this in your Supabase SQL Editor to create all tables.
--- ============================================================
+-- WARNING: This schema is for context only and is not meant to be run.
+-- Table order and constraints may not be valid for execution.
 
--- 1. USER (base identity table)
-CREATE TABLE IF NOT EXISTS "USER" (
-  user_id   VARCHAR(25) PRIMARY KEY,
-  user_name VARCHAR(25) NOT NULL,
-  email     VARCHAR(30) UNIQUE NOT NULL,
-  password  VARCHAR(50) NOT NULL,
-  role      VARCHAR(15) CHECK (role IN ('Student', 'Instructor'))
+CREATE TABLE public.Assignment (
+  Assignment_id character varying NOT NULL,
+  Module_id character varying,
+  CONSTRAINT Assignment_pkey PRIMARY KEY (Assignment_id),
+  CONSTRAINT Assignment_Module_id_fkey FOREIGN KEY (Module_id) REFERENCES public.Module(module_id)
 );
-
--- 2. STUDENT
-CREATE TABLE IF NOT EXISTS "STUDENT" (
-  user_id VARCHAR(25) PRIMARY KEY REFERENCES "USER"(user_id) ON DELETE CASCADE
+CREATE TABLE public.Attempt (
+  attempt_id character varying NOT NULL,
+  student_id uuid,
+  assignment_id character varying,
+  score real NOT NULL,
+  CONSTRAINT Attempt_pkey PRIMARY KEY (attempt_id),
+  CONSTRAINT Attempt_assignment_id_fkey FOREIGN KEY (assignment_id) REFERENCES public.Assignment(Assignment_id),
+  CONSTRAINT Attempt_student_id_fkey FOREIGN KEY (student_id) REFERENCES public.Student(user_id)
 );
-
--- 3. INSTRUCTOR
-CREATE TABLE IF NOT EXISTS "INSTRUCTOR" (
-  user_id VARCHAR(25) PRIMARY KEY REFERENCES "USER"(user_id) ON DELETE CASCADE
+CREATE TABLE public.Course (
+  course_id character varying NOT NULL,
+  Title character varying NOT NULL UNIQUE,
+  Description character varying NOT NULL,
+  Domain character varying NOT NULL,
+  Instructor_id uuid,
+  CONSTRAINT Course_pkey PRIMARY KEY (course_id),
+  CONSTRAINT Course_Instructor_id_fkey FOREIGN KEY (Instructor_id) REFERENCES public.Instructor(user_id)
 );
-
--- 4. COURSE
-CREATE TABLE IF NOT EXISTS "COURSE" (
-  course_id     VARCHAR(15)  PRIMARY KEY,
-  title         VARCHAR(50)  UNIQUE NOT NULL,
-  description   VARCHAR(200) NOT NULL,
-  domain        VARCHAR(25)  NOT NULL,
-  instructor_id VARCHAR(25)  REFERENCES "INSTRUCTOR"(user_id) ON DELETE SET NULL
+CREATE TABLE public.Doubt (
+  doubt_id character varying NOT NULL,
+  student_id uuid,
+  course_id character varying,
+  doubt_text character varying NOT NULL,
+  reply character varying,
+  CONSTRAINT Doubt_pkey PRIMARY KEY (doubt_id),
+  CONSTRAINT Doubt_student_id_fkey FOREIGN KEY (student_id) REFERENCES public.Student(user_id),
+  CONSTRAINT Doubt_course_id_fkey FOREIGN KEY (course_id) REFERENCES public.Course(course_id)
 );
-
--- 5. MODULE
-CREATE TABLE IF NOT EXISTS "MODULE" (
-  module_id   VARCHAR(15) PRIMARY KEY,
-  module_name VARCHAR(25) NOT NULL,
-  module_no   INT         NOT NULL,
-  course_id   VARCHAR(15) REFERENCES "COURSE"(course_id) ON DELETE CASCADE
+CREATE TABLE public.Enrollment (
+  enroll_id character varying NOT NULL,
+  student_id uuid,
+  course_id character varying,
+  enroll_time timestamp with time zone NOT NULL DEFAULT (now() AT TIME ZONE 'ist'::text),
+  status character varying,
+  CONSTRAINT Enrollment_pkey PRIMARY KEY (enroll_id),
+  CONSTRAINT Enrollment_course_id_fkey FOREIGN KEY (course_id) REFERENCES public.Course(course_id),
+  CONSTRAINT Enrollment_student_id_fkey FOREIGN KEY (student_id) REFERENCES public.user(user_id)
 );
-
--- 6. MATERIAL
-CREATE TABLE IF NOT EXISTS "MATERIAL" (
-  material_id   VARCHAR(15)  PRIMARY KEY,
-  module_id     VARCHAR(15)  REFERENCES "MODULE"(module_id) ON DELETE CASCADE,
-  title         VARCHAR(25)  NOT NULL,
-  file_url      VARCHAR(100) UNIQUE,
-  type          VARCHAR(15)  NOT NULL,
-  description   VARCHAR(100),
-  display_order INT          NOT NULL
+CREATE TABLE public.Instructor (
+  user_id uuid NOT NULL,
+  CONSTRAINT Instructor_pkey PRIMARY KEY (user_id),
+  CONSTRAINT Instructor_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.user(user_id)
 );
-
--- 7. ASSIGNMENT
-CREATE TABLE IF NOT EXISTS "ASSIGNMENT" (
-  assignment_id VARCHAR(15) PRIMARY KEY,
-  module_id     VARCHAR(15) REFERENCES "MODULE"(module_id) ON DELETE CASCADE
+CREATE TABLE public.Material (
+  material_id character varying NOT NULL,
+  Module_id character varying,
+  title character varying NOT NULL,
+  File_url character varying NOT NULL UNIQUE,
+  Type character varying,
+  Description character varying,
+  Display_order bigint NOT NULL,
+  CONSTRAINT Material_pkey PRIMARY KEY (material_id),
+  CONSTRAINT Material_Module_id_fkey FOREIGN KEY (Module_id) REFERENCES public.Module(module_id)
 );
-
--- 8. QUESTION
-CREATE TABLE IF NOT EXISTS "QUESTION" (
-  q_id           VARCHAR(15)  PRIMARY KEY,
-  assignment_id  VARCHAR(15)  REFERENCES "ASSIGNMENT"(assignment_id) ON DELETE CASCADE,
-  question_text  VARCHAR(500) NOT NULL,
-  correct_choice CHAR(1)      NOT NULL
+CREATE TABLE public.Module (
+  module_id character varying NOT NULL,
+  module_name character varying NOT NULL,
+  module_no bigint NOT NULL,
+  course_id character varying,
+  CONSTRAINT Module_pkey PRIMARY KEY (module_id),
+  CONSTRAINT Module_course_id_fkey FOREIGN KEY (course_id) REFERENCES public.Course(course_id)
 );
-
--- 9. ENROLLMENT
-CREATE TABLE IF NOT EXISTS "ENROLLMENT" (
-  enroll_id  VARCHAR(15) PRIMARY KEY,
-  student_id VARCHAR(25) REFERENCES "STUDENT"(user_id) ON DELETE CASCADE,
-  course_id  VARCHAR(15) REFERENCES "COURSE"(course_id) ON DELETE CASCADE,
-  enroll_time TIMESTAMP   NOT NULL DEFAULT now(),
-  status     VARCHAR(15) CHECK (status IN ('In Progress', 'Completed')),
-  UNIQUE(student_id, course_id)
+CREATE TABLE public.Question (
+  q_id character varying NOT NULL,
+  Assignment_id character varying,
+  Question_text character varying NOT NULL,
+  Correct_Choice character varying NOT NULL,
+  CONSTRAINT Question_pkey PRIMARY KEY (q_id),
+  CONSTRAINT Question_Assignment_id_fkey FOREIGN KEY (Assignment_id) REFERENCES public.Assignment(Assignment_id)
 );
-
--- 10. ATTEMPT
-CREATE TABLE IF NOT EXISTS "ATTEMPT" (
-  attempt_id    VARCHAR(15)   PRIMARY KEY,
-  student_id    VARCHAR(25)   REFERENCES "STUDENT"(user_id) ON DELETE CASCADE,
-  assignment_id VARCHAR(15)   REFERENCES "ASSIGNMENT"(assignment_id) ON DELETE CASCADE,
-  time          TIMESTAMP     NOT NULL DEFAULT now(),
-  score         DECIMAL(4,2)  NOT NULL
+CREATE TABLE public.Student (
+  user_id uuid NOT NULL,
+  CONSTRAINT Student_pkey PRIMARY KEY (user_id),
+  CONSTRAINT Student_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.user(user_id)
 );
-
--- 11. DOUBT
-CREATE TABLE IF NOT EXISTS "DOUBT" (
-  doubt_id   VARCHAR(15)  PRIMARY KEY,
-  student_id VARCHAR(25)  REFERENCES "STUDENT"(user_id) ON DELETE CASCADE,
-  course_id  VARCHAR(15)  REFERENCES "COURSE"(course_id) ON DELETE CASCADE,
-  doubt_text VARCHAR(300) NOT NULL,
-  reply      VARCHAR(300)
+CREATE TABLE public.user (
+  user_id uuid NOT NULL DEFAULT gen_random_uuid(),
+  user_name text NOT NULL UNIQUE,
+  email text NOT NULL UNIQUE,
+  role text CHECK (role = ANY (ARRAY['Student'::text, 'Instructor'::text])),
+  password text NOT NULL,
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+  CONSTRAINT user_pkey PRIMARY KEY (user_id)
 );
-
--- ─── Row Level Security ───────────────────────────────────────────────────────
-
-ALTER TABLE "USER"       ENABLE ROW LEVEL SECURITY;
-ALTER TABLE "STUDENT"    ENABLE ROW LEVEL SECURITY;
-ALTER TABLE "INSTRUCTOR" ENABLE ROW LEVEL SECURITY;
-ALTER TABLE "COURSE"     ENABLE ROW LEVEL SECURITY;
-ALTER TABLE "MODULE"     ENABLE ROW LEVEL SECURITY;
-ALTER TABLE "MATERIAL"   ENABLE ROW LEVEL SECURITY;
-ALTER TABLE "ASSIGNMENT" ENABLE ROW LEVEL SECURITY;
-ALTER TABLE "QUESTION"   ENABLE ROW LEVEL SECURITY;
-ALTER TABLE "ENROLLMENT" ENABLE ROW LEVEL SECURITY;
-ALTER TABLE "ATTEMPT"    ENABLE ROW LEVEL SECURITY;
-ALTER TABLE "DOUBT"      ENABLE ROW LEVEL SECURITY;
-
--- Public read for courses, modules, materials, questions
-CREATE POLICY "Public read courses"    ON "COURSE"     FOR SELECT USING (true);
-CREATE POLICY "Public read modules"    ON "MODULE"     FOR SELECT USING (true);
-CREATE POLICY "Public read materials"  ON "MATERIAL"   FOR SELECT USING (true);
-CREATE POLICY "Public read questions"  ON "QUESTION"   FOR SELECT USING (true);
-CREATE POLICY "Public read assignment" ON "ASSIGNMENT" FOR SELECT USING (true);
-
--- Students can only see/manage their own data
-CREATE POLICY "Students own enrollment" ON "ENROLLMENT"
-  FOR ALL USING (auth.uid()::text = student_id);
-
-CREATE POLICY "Students own attempts" ON "ATTEMPT"
-  FOR ALL USING (auth.uid()::text = student_id);
-
-CREATE POLICY "Students own doubts" ON "DOUBT"
-  FOR ALL USING (auth.uid()::text = student_id);
-
--- Instructors can manage their own courses
-CREATE POLICY "Instructors manage courses" ON "COURSE"
-  FOR ALL USING (auth.uid()::text = instructor_id);
