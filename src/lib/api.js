@@ -33,16 +33,17 @@ export async function fetchCourses({ domain } = {}) {
 }
 
 export async function fetchCourse(courseId) {
+  console.log("Fetching")
   if (USE_MOCK) {
     const data = COURSES.find((c) => c.id === courseId) || null;
     return { data, error: data ? null : { message: 'Course not found' } };
   }
   return supabase
-    .from('COURSE')
+    .from('Course')
     .select(`
-      course_id, title, description, domain, instructor_id,
-      INSTRUCTOR ( user_id, USER ( user_name ) ),
-      MODULE ( module_id, module_name, module_no, MATERIAL (*), ASSIGNMENT (*) )
+      course_id, Title, Description, Domain, Instructor_id,
+      Instructor ( user_id, user ( user_name ) ),
+      Module ( module_id, module_name, module_no, Material (*), Assignment (*) )
     `)
     .eq('course_id', courseId)
     .single();
@@ -51,8 +52,8 @@ export async function fetchCourse(courseId) {
 export async function fetchModules(courseId) {
   if (USE_MOCK) return { data: MODULES, error: null };
   return supabase
-    .from('MODULE')
-    .select('*, MATERIAL(*), ASSIGNMENT(*, QUESTION(*))')
+    .from('Module')
+    .select('*, Material(*), Assigment(*), Question(*))')
     .eq('course_id', courseId)
     .order('module_no');
 }
@@ -61,7 +62,7 @@ export async function fetchModules(courseId) {
 
 export async function enrollStudent(studentId, courseId) {
   if (USE_MOCK) return { data: { enroll_id: 'mock-enroll-1' }, error: null };
-  return supabase.from('ENROLLMENT').insert({
+  return supabase.from('Enrollment').insert({
     student_id: studentId,
     course_id: courseId,
     enroll_time: new Date().toISOString(),
@@ -72,7 +73,7 @@ export async function enrollStudent(studentId, courseId) {
 export async function fetchEnrollment(studentId, courseId) {
   if (USE_MOCK) return { data: null, error: null };
   return supabase
-    .from('ENROLLMENT')
+    .from('Enrollment')
     .select('*')
     .eq('student_id', studentId)
     .eq('course_id', courseId)
@@ -82,7 +83,7 @@ export async function fetchEnrollment(studentId, courseId) {
 export async function fetchEnrolledCourses(studentId) {
   if (USE_MOCK) return { data: COURSES.slice(0, 2), error: null };
   return supabase
-    .from('ENROLLMENT')
+    .from('Enrollment')
     .select('*, COURSE(*)')
     .eq('student_id', studentId)
     .order('enroll_time', { ascending: false });
@@ -93,14 +94,14 @@ export async function fetchEnrolledCourses(studentId) {
 export async function fetchQuestions(assignmentId) {
   if (USE_MOCK) return { data: QUIZ_QUESTIONS, error: null };
   return supabase
-    .from('QUESTION')
+    .from('Question')
     .select('*')
     .eq('assignment_id', assignmentId);
 }
 
 export async function submitAttempt(studentId, assignmentId, score) {
   if (USE_MOCK) return { data: { attempt_id: 'mock-attempt-1', score }, error: null };
-  return supabase.from('ATTEMPT').insert({
+  return supabase.from('Attempt').insert({
     student_id: studentId,
     assignment_id: assignmentId,
     time: new Date().toISOString(),
@@ -111,7 +112,7 @@ export async function submitAttempt(studentId, assignmentId, score) {
 export async function fetchAttempts(studentId, assignmentId) {
   if (USE_MOCK) return { data: [], error: null };
   return supabase
-    .from('ATTEMPT')
+    .from('Attempt')
     .select('*')
     .eq('student_id', studentId)
     .eq('assignment_id', assignmentId)
@@ -122,7 +123,7 @@ export async function fetchAttempts(studentId, assignmentId) {
 
 export async function submitDoubt(studentId, courseId, doubtText) {
   if (USE_MOCK) return { data: { doubt_id: 'mock-doubt-1' }, error: null };
-  return supabase.from('DOUBT').insert({
+  return supabase.from('Doubt').insert({
     student_id: studentId,
     course_id: courseId,
     doubt_text: doubtText,
@@ -132,7 +133,7 @@ export async function submitDoubt(studentId, courseId, doubtText) {
 export async function fetchDoubts(studentId, courseId) {
   if (USE_MOCK) return { data: [], error: null };
   return supabase
-    .from('DOUBT')
+    .from('Doubt')
     .select('*')
     .eq('student_id', studentId)
     .eq('course_id', courseId)
