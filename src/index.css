@@ -47,3 +47,14 @@ h1, h2, h3, h4 { font-family: 'Lora', serif; color: var(--text-dark); }
 a { color: inherit; text-decoration: none; }
 button { cursor: pointer; font-family: 'Sora', sans-serif; }
 input, textarea, select { font-family: 'Sora', sans-serif; }
+
+/* ─── Spinner ─────────────────────────────────── */
+.spinner { border-radius: 50%; border: 2.5px solid var(--border); border-top-color: var(--mint); animation: _spin 0.7s linear infinite; }
+@keyframes _spin { to { transform: rotate(360deg); } }
+
+/* ─── Accessibility ───────────────────────────── */
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+/* ─── Smooth page transitions ─────────────────── */
+main > * { animation: fadeIn 0.18s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }

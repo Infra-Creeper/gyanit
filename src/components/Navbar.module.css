@@ -1,94 +1,36 @@
-.nav {
-  background: var(--slate);
-  padding: 0 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 64px;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  border-bottom: 1px solid rgba(168,213,186,0.15);
-}
+.nav { background: var(--slate); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 64px; position: sticky; top: 0; z-index: 200; border-bottom: 1px solid rgba(168,213,186,0.15); }
 
-.logo {
-  font-family: 'Lora', serif;
-  font-size: 22px;
-  font-weight: 600;
-  color: var(--mint-mid);
-  text-decoration: none;
-}
+.logo { font-family: 'Lora', serif; font-size: 22px; font-weight: 600; color: var(--mint-mid); text-decoration: none; }
 .logo span { color: var(--blossom); }
 
-.links {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
+.desktopLinks { display: flex; align-items: center; gap: 8px; }
 
-.link {
-  font-size: 14px;
-  color: rgba(250,252,251,0.7);
-  text-decoration: none;
-  padding: 8px 14px;
-  border-radius: 8px;
-  transition: all 0.2s;
-}
-.link:hover, .link.active {
-  background: rgba(168,213,186,0.12);
-  color: var(--white);
-}
+.link { font-size: 14px; color: rgba(250,252,251,0.7); text-decoration: none; padding: 8px 14px; border-radius: 8px; transition: all 0.2s; }
+.link:hover, .link.active { background: rgba(168,213,186,0.12); color: var(--white); }
 
-.linkBtn {
-  background: none;
-  border: none;
-  font-family: 'Sora', sans-serif;
-  font-size: 14px;
-  color: rgba(250,252,251,0.7);
-  cursor: pointer;
-  padding: 8px 14px;
-  border-radius: 8px;
-  transition: all 0.2s;
-}
-.linkBtn:hover {
-  background: rgba(168,213,186,0.12);
-  color: var(--white);
-}
+.linkBtn { background: none; border: none; font-family: 'Sora', sans-serif; font-size: 14px; color: rgba(250,252,251,0.7); cursor: pointer; padding: 8px 14px; border-radius: 8px; transition: all 0.2s; }
+.linkBtn:hover { background: rgba(168,213,186,0.12); color: var(--white); }
 
-.userRow {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.avatar {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: var(--mint);
-  color: var(--slate);
-  font-weight: 700;
-  font-size: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.userName {
-  font-size: 14px;
-  color: var(--white);
-  font-weight: 500;
-}
-
-.iconBtn {
-  background: none;
-  border: none;
-  color: rgba(250,252,251,0.6);
-  cursor: pointer;
-  padding: 6px;
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  transition: all 0.2s;
-}
+.userRow   { display: flex; align-items: center; gap: 10px; }
+.avatar    { width: 32px; height: 32px; border-radius: 50%; background: var(--mint); color: var(--slate); font-weight: 700; font-size: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.userName  { font-size: 14px; color: var(--white); font-weight: 500; }
+.iconBtn   { background: none; border: none; color: rgba(250,252,251,0.6); cursor: pointer; padding: 6px; border-radius: 6px; display: flex; align-items: center; transition: all 0.2s; }
 .iconBtn:hover { color: var(--white); background: rgba(255,255,255,0.1); }
+
+.hamburger { display: none; background: none; border: none; color: var(--white); cursor: pointer; padding: 6px; }
+
+/* Mobile drawer */
+.drawer { display: none; position: absolute; top: 64px; left: 0; right: 0; background: var(--slate); border-bottom: 1px solid rgba(168,213,186,0.15); padding: 1rem 2rem; flex-direction: column; gap: 4px; z-index: 199; }
+
+.drawerLink { background: none; border: none; font-family: 'Sora', sans-serif; font-size: 15px; color: rgba(250,252,251,0.8); cursor: pointer; padding: 12px 0; text-align: left; text-decoration: none; display: block; border-bottom: 1px solid rgba(168,213,186,0.08); transition: color 0.2s; }
+.drawerLink:hover { color: var(--white); }
+
+.drawerUser    { display: flex; align-items: center; gap: 10px; padding: 12px 0; color: var(--white); font-size: 14px; }
+.drawerLogout  { background: none; border: none; font-family: 'Sora', sans-serif; font-size: 14px; color: rgba(250,252,251,0.6); cursor: pointer; padding: 12px 0; text-align: left; }
+.drawerSignup  { background: var(--mint); color: var(--slate); border: none; font-family: 'Sora', sans-serif; font-size: 14px; font-weight: 600; padding: 11px 20px; border-radius: 10px; cursor: pointer; margin-top: 8px; }
+
+@media (max-width: 640px) {
+  .desktopLinks { display: none; }
+  .hamburger    { display: flex; }
+  .drawer       { display: flex; }
+}

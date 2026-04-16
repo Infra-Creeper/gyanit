@@ -1,16 +1,48 @@
-# React + Vite
+# gyan.it — Production React Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+India's free NPTEL-style learning platform. React + Vite + Supabase.
 
-Currently, two official plugins are available:
+## Quick Start
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+```bash
+npm install
+cp .env.example .env.local   # fill in Supabase credentials
+npm run dev
+```
 
-## React Compiler
+## Connecting Supabase
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+1. Create a project at https://app.supabase.com
+2. Run `supabase_schema.sql` in the SQL Editor
+3. Set `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` in `.env.local`
+4. In `src/lib/api.js` set `USE_MOCK = false`
 
-## Expanding the ESLint configuration
+## Deployment (Vercel)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+npm i -g vercel && vercel --prod
+```
+
+Add a `vercel.json`:
+```json
+{ "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }] }
+```
+
+## Structure
+
+```
+src/
+  components/   Button, CourseCard, Navbar, Footer, Spinner, SEOHead,
+                ErrorBoundary, ProtectedRoute
+  context/      AuthContext (Supabase auth + profile)
+  data/         mockData.js (replaced by Supabase when USE_MOCK=false)
+  hooks/        useAsync, useDebounce, useLocalStorage
+  lib/          supabase.js, api.js (all DB calls in one place)
+  pages/        Landing, Courses, CourseDetail, Quiz, Login, NotFound
+```
+
+## Auth Flow
+
+- Signup → Supabase Auth → inserts USER + STUDENT/INSTRUCTOR rows
+- Login → session auto-persisted in localStorage
+- ProtectedRoute wraps /quiz → redirects to /login, returns after auth
