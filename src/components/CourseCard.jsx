@@ -18,8 +18,8 @@ export default function CourseCard({ course }) {
         <span className={`${styles.badge} ${badgeClass}`}>{course.badgeLabel}</span>
       </div>
       <div className={styles.info}>
-        <h3 className={styles.title}>{course.title}</h3>
-        <p className={styles.instructor}>{course.instructor} &bull; {course.institute}</p>
+        <h3 className={styles.title}>{course.Title}</h3>
+        <p className={styles.instructor}>{course.Instructor.user.user_name} &bull; {course.institute}</p>
         <div className={styles.meta}>
           <span className={styles.rating}><Star size={12} fill="currentColor" /> {course.rating}</span>
           <span><BookOpen size={12} /> {course.modules} modules</span>

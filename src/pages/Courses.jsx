@@ -18,7 +18,7 @@ export default function Courses() {
 
   const debouncedSearch = useDebounce(search, 300);
   const { data: courses, loading, error } = useAsync(fetchCourses);
-
+  console.log(courses)
   const toggleDomain = (id) =>
     setSelectedDomains((prev) =>
       prev.includes(id) ? prev.filter((d) => d !== id) : [...prev, id]

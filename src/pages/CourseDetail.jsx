@@ -21,9 +21,11 @@ export default function CourseDetail() {
   const { data: course, loading: courseLoading, error: courseError } = useAsync(
     () => fetchCourse(id), [id]
   );
+  console.log(course)
   const { data: modules, loading: modulesLoading } = useAsync(
     () => fetchModules(id), [id]
   );
+  console.log(modules)
   const { data: enrollment, refetch: refetchEnrollment } = useAsync(
     () => isAuthenticated && user ? fetchEnrollment(user.id, id) : Promise.resolve({ data: null, error: null }),
     [id, user?.id, isAuthenticated]
@@ -33,6 +35,7 @@ export default function CourseDetail() {
   const completed = (modules || []).filter((m) => m.status === 'completed').length;
   const progress = modules?.length ? Math.round((completed / modules.length) * 100) : 0;
 
+  
   const handleEnroll = async () => {
     if (!isAuthenticated) { navigate('/login'); return; }
     setEnrolling(true);
@@ -70,7 +73,7 @@ export default function CourseDetail() {
   return (
     <>
       <SEOHead
-        title={course.title}
+        title={course.Title}
         description={course.description}
         path={`/courses/${id}`}
       />
@@ -82,15 +85,15 @@ export default function CourseDetail() {
             <nav className={styles.breadcrumb} aria-label="Breadcrumb">
               <Link to="/courses">Courses</Link>
               <ChevronRight size={13} />
-              <span>{course.domain}</span>
+              <span>{course.Domain}</span>
               <ChevronRight size={13} />
-              <span>{course.title}</span>
+              <span>{course.Title}</span>
             </nav>
-            <h1>{course.title}</h1>
+            <h1>{course.Title}</h1>
             <p>{course.description}</p>
             <div className={styles.instructorRow}>
               <div className={styles.avatar}>{course.instructorInitials}</div>
-              <span>{course.instructor} · <em>{course.institute}</em></span>
+              <span>{course.Instructor} · <em>{course.institute}</em></span>
             </div>
             <div className={styles.metaRow}>
               <span><Star size={13} fill="currentColor" className={styles.starIcon} /> {course.rating}</span>
@@ -100,7 +103,7 @@ export default function CourseDetail() {
             </div>
             <div className={styles.chips}>
               <span className={styles.chip}>Certificate on completion</span>
-              <span className={`${styles.chip} ${styles.chipSlate}`}>{course.domain}</span>
+              <span className={`${styles.chip} ${styles.chipSlate}`}>{course.Domain}</span>
             </div>
           </div>
 
@@ -109,7 +112,7 @@ export default function CourseDetail() {
               <div className={styles.videoThumb} role="img" aria-label="Course preview thumbnail">
                 <div className={styles.playOverlay}>
                   <div className={styles.playBtn} aria-hidden="true"><Play size={22} fill="currentColor" /></div>
-                  <span>Preview: Intro to {course.title?.split(' ')[0]}</span>
+                  <span>Preview: Intro to {course.Title?.split(' ')[0]}</span>
                 </div>
               </div>
               <div className={styles.videoBody}>
